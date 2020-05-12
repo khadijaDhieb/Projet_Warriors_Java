@@ -3,9 +3,9 @@ package com.projet_warriors;
 public class Guerrier {
 
     private String nomGuerrier;
-    private int vieGuerrier;
-    private int forceGuerrier;
-    private String imageGuerrier;
+    private int vieGuerrier = 5;
+    private int forceGuerrier = 5;
+    private String imageGuerrier ="image Guerrier";
 
 
     public Guerrier() {
@@ -14,9 +14,6 @@ public class Guerrier {
 
     public Guerrier(String name) {
         this.nomGuerrier = name;
-        this.forceGuerrier = 5;
-        this.vieGuerrier = 5;
-        this.imageGuerrier = "image Guerrier";
     }
 
     public Guerrier(String name, int lifeLevel, int power, String photo) {

@@ -3,9 +3,9 @@ package com.projet_warriors;
 public class Magicien {
 
     private String nomMagicien;
-    private int vieMagicien;
-    private int forceMagicien;
-    private String imageMagicien;
+    private int vieMagicien = 3;
+    private int forceMagicien = 8;
+    private String imageMagicien = "Image Magicien";
 
     public void setNomMagicien(String nomMagicien) {
         this.nomMagicien = nomMagicien;
@@ -56,9 +56,6 @@ public class Magicien {
 
     public Magicien(String name) {
         this.nomMagicien = name;
-        this.forceMagicien=3;
-        this.vieMagicien=8;
-        this.imageMagicien="Image Magicien";
     }
 
     public Magicien(String name, int lifeLevel, int power, String photo) {

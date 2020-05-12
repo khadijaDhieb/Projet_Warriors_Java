@@ -3,18 +3,17 @@ package com.projet_warriors;
 import java.util.Scanner;
 
 public class Menu {
-    //Boolean ready = false;
 
     public Menu() {
         System.out.println("Vous avez lancez une nouvelle partie: Bienvenue !");
     }
 
-    public void play() {
+    public void lanceJeu() {
 
         boolean ready = false;
         Object playerHero;
 
-
+        PlayGame partie = new PlayGame();
         do {
 
             Scanner sc = new Scanner(System.in);
@@ -22,7 +21,6 @@ public class Menu {
             String playerChoice = sc.nextLine();
 
 
-            PlayGame partie = new PlayGame();
             playerHero = partie.createPlayer(playerChoice);
 
             if (playerHero != null) {
@@ -38,6 +36,17 @@ public class Menu {
                 }
             }
         } while (!ready);
+
+
+        Scanner start = new Scanner(System.in);
+        System.out.println("Appuyer sur entrer pour commencer le jeu ");
+        start.nextLine();
+
+        System.out.println("--> Que la partie commence !" +
+                "Vous êtes sur la première case du plateau de jeu.");
+
+        partie.play();
+
 
     }
 }

@@ -5,7 +5,8 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
      Menu partie = new Menu();
-     partie.play();
+     partie.lanceJeu();
+
 
        // Guerrier guerrier1 = new Guerrier();
 
