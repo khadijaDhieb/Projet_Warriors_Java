@@ -1,54 +1,86 @@
 package com.projet_warriors;
 
+import com.projet_warriors.personnages.Personnage;
+
 import java.util.Scanner;
 
 public class Menu {
 
     public Menu() {
-        System.out.println("Vous avez lancez une nouvelle partie: Bienvenue !");
+        System.out.println("Vous avez lancez une nouvelle partie: Bienvenue ! Si vous changez d'avis, vous pouvez tapez 'quitter' !");
     }
 
-    public void lanceJeu() {
 
-        boolean ready = false;
-        Object playerHero;
+    //------------------ Méthode du déroule de jeu
+
+
+    public void lanceJeu(Scanner input) {
 
         PlayGame partie = new PlayGame();
+
+        this.createPlayerValid(input, partie);
+
+        System.out.println("Appuyer sur entrer pour commencer le jeu ");
+        String choice = input.nextLine();
+        partie.exitJeu(choice , input);
+
+
+        System.out.println("--> Que la partie commence !" +
+                "Vous êtes sur la première case du plateau de jeu.");
+
+        partie.play(input);
+        this.choixRelanceJeu(input);
+
+    }
+
+    //------------------------- Méthode qui permet de sa'ssurer que la crétaion d'un joueur a bien était faites
+
+    public void createPlayerValid(Scanner input, PlayGame partie) {
+
+
+        boolean ready = false;
+        Personnage playerHero;
+
         do {
 
-            Scanner sc = new Scanner(System.in);
             System.out.println("Quel personnage vous voulez créer : Guerrier ou Magicien ?");
-            String playerChoice = sc.nextLine();
-
+            String playerChoice = input.nextLine();
+            partie.exitJeu(playerChoice, input);
 
             playerHero = partie.createPlayer(playerChoice);
 
             if (playerHero != null) {
+                playerHero = partie.chooseName(playerHero, input);
                 System.out.println(playerHero);
                 ready = true;
             } else {
-                Boolean quitte = partie.quitteJeu();
-                if (quitte == true) {
-                    System.out.println("La partie est terminée: Au revoir !");
-                    break;
+                String status = partie.statusJeu(input);
+                if (status.equals("quitter")) {
+                    partie.exitJeu(status, input);
                 } else {
                     System.out.println("Super ! merci de bien remplir les informations demandées ^^");
                 }
             }
         } while (!ready);
+    }
 
+    //------------------- Méthode qui permet de choisir entre: quitter / recommencer une partie
 
-        Scanner start = new Scanner(System.in);
-        System.out.println("Appuyer sur entrer pour commencer le jeu ");
-        start.nextLine();
+    public void choixRelanceJeu(Scanner input){
+        System.out.println("Vous Voulez reprendre la partie ou quitter ? Oui ou Non ");
+        String choix = input.nextLine();
 
-        System.out.println("--> Que la partie commence !" +
-                "Vous êtes sur la première case du plateau de jeu.");
-
-        partie.play();
-
+        if (choix.toLowerCase().equals("oui")){
+            this.lanceJeu(input);
+        }else{
+            System.exit(0);
+        }
 
     }
+
+
+
+
 }
 
 
