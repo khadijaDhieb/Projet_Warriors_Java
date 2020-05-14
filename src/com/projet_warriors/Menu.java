@@ -45,7 +45,7 @@ public class Menu {
 
             System.out.println("Quel personnage vous voulez créer : Guerrier ou Magicien ?");
             String playerChoice = input.nextLine();
-            partie.exitJeu(playerChoice, input);
+            //partie.exitJeu(playerChoice, input);
 
             playerHero = partie.createPlayer(playerChoice);
 

@@ -8,11 +8,11 @@ public abstract class Personnage {
 
 
     public Personnage(){
-        this.nom="";
+        this("");
     }
 
     public Personnage(String nom) {
-        this.nom = nom;
+        this(nom , 0 , 0);
     }
 
 
@@ -54,7 +54,7 @@ public abstract class Personnage {
         return "Mon Hero : {" +
                 "nom='" + nom + '\'' +
                 ", vie=" + vie +
-                ", force=" + force +
-                '}';
+                ", force=" + force
+                ;
     }
 }

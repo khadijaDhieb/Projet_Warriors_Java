@@ -56,7 +56,7 @@ public class PlayGame {
 
         int posPlayer = 0;
         int plateau = 64;
-        int dice = 0;
+        int dice ;
         int tour = 0;
 
         while (posPlayer < plateau) {
@@ -69,16 +69,19 @@ public class PlayGame {
             System.out.println("Vous avancez de  : " + dice + " cases.");
 
             posPlayer = posPlayer + dice;
+
+            try {
+                controlePos(posPlayer , plateau);
+            } catch (PersonnageHorsPlateauException e) {
+                System.out.println("Ah non ! Vous avez depassez la derniere case de " + (posPlayer-plateau) + "! Votre hèros sera automatiquement placer sur la case 64 ;) ");
+                posPlayer = plateau ;
+            }
+
             System.out.println("Votre position actuelle est  : " + posPlayer);
 
             tour++;
         }
 
-        try {
-            controlePos(posPlayer);
-        } catch (PersonnageHorsPlateauException e) {
-            System.out.println("Ah non ! Vous avez depassez la derniere case !");
-        }
 
         System.out.println("Bravo! vous avez gagner la partie ! ");
         System.out.println("Elle a duré : " + tour + " tours.");
@@ -86,7 +89,7 @@ public class PlayGame {
     }
 
 
-    //----------------- Méthode qui permet d'évaluer le choix de l'utilisateur en cas de réponse
+    //----------------- Méthode qui permet d'évaluer une réponse pas bonne de l'utilisateur
 
     public String statusJeu(Scanner input) {
         String status = "";
@@ -103,7 +106,7 @@ public class PlayGame {
 
     public void exitJeu(String status, Scanner input) {
         if (status.equals("quitter")) {
-            System.out.println("Voulez vous continuer ou quitter le jeu? Quitter ou Continuer ");
+            System.out.println("Confirmer votre choix? Quitter ou Continuer ");
             String str = input.nextLine();
             if (str.equals("quitter")) {
                 System.exit(0);
@@ -113,8 +116,8 @@ public class PlayGame {
 
     //------------- Méthode qui gère le PersonnageHorsPlateauException
 
-    public void controlePos(int pos) throws PersonnageHorsPlateauException {
-        if (pos > 64) {
+    public void controlePos(int pos , int plateau) throws PersonnageHorsPlateauException {
+        if (pos > plateau) {
             throw new PersonnageHorsPlateauException("Dépassement de la dernière case ");
         }
 
