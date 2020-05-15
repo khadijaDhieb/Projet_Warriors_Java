@@ -1,6 +1,6 @@
 package com.projet_warriors.armes;
 
-public class Epee extends Armes {
+public class Epee extends Arme {
 
 
     public Epee() {

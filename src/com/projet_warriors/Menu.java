@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class Menu {
 
+    Personnage playerHero ;
+
     public Menu() {
         System.out.println("Vous avez lancez une nouvelle partie: Bienvenue ! Si vous changez d'avis, vous pouvez tapez 'quitter' !");
     }
@@ -18,7 +20,8 @@ public class Menu {
 
         PlayGame partie = new PlayGame();
 
-        this.createPlayerValid(input, partie);
+        this.createPlayerValid(input, partie );
+        System.out.println(playerHero);
 
         System.out.println("Appuyer sur entrer pour commencer le jeu ");
         String choice = input.nextLine();
@@ -28,18 +31,16 @@ public class Menu {
         System.out.println("--> Que la partie commence !" +
                 "Vous êtes sur la première case du plateau de jeu.");
 
-        partie.play(input);
+        partie.play(input , playerHero);
         this.choixRelanceJeu(input);
 
     }
 
-    //------------------------- Méthode qui permet de sa'ssurer que la crétaion d'un joueur a bien était faites
+    //------------------------- Méthode qui permet de s'assurer que la crétaion d'un joueur a bien était faites
 
-    public void createPlayerValid(Scanner input, PlayGame partie) {
-
+    public void createPlayerValid(Scanner input, PlayGame partie ) {
 
         boolean ready = false;
-        Personnage playerHero;
 
         do {
 
@@ -51,7 +52,6 @@ public class Menu {
 
             if (playerHero != null) {
                 playerHero = partie.chooseName(playerHero, input);
-                System.out.println(playerHero);
                 ready = true;
             } else {
                 String status = partie.statusJeu(input);
@@ -62,6 +62,7 @@ public class Menu {
                 }
             }
         } while (!ready);
+
     }
 
     //------------------- Méthode qui permet de choisir entre: quitter / recommencer une partie

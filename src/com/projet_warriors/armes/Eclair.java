@@ -1,7 +1,7 @@
 package com.projet_warriors.armes;
 
 
-public class Eclair extends Armes {
+public class Eclair extends Sort {
 
 
 

@@ -1,5 +1,7 @@
 package com.projet_warriors;
 
+import com.projet_warriors.personnages.Personnage;
+
 public abstract class Case {
 
     protected String nom ;
@@ -14,6 +16,9 @@ public abstract class Case {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public void interact(Personnage perso){
     }
 
     @Override

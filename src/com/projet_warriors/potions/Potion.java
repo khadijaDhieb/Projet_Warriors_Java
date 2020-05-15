@@ -1,6 +1,8 @@
 package com.projet_warriors.potions;
 
 import com.projet_warriors.Case;
+import com.projet_warriors.personnages.Guerrier;
+import com.projet_warriors.personnages.Personnage;
 
 public class Potion extends Case {
 
@@ -26,6 +28,11 @@ public class Potion extends Case {
 
     public void setViePoints(int viePoints) {
         this.viePoints = viePoints;
+    }
+
+    public void interact(Personnage perso){
+        System.out.println(" Vous venez de collecter un "+ this.nom + " ! vous gagnez " + this.viePoints + "de points de vie de plus ! ");
+        perso.addVie(this.viePoints);
     }
 
     @Override

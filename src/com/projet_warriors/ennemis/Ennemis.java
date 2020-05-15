@@ -1,6 +1,10 @@
 package com.projet_warriors.ennemis;
 
-public abstract class Ennemis {
+import com.projet_warriors.Case;
+import com.projet_warriors.personnages.Guerrier;
+import com.projet_warriors.personnages.Personnage;
+
+public abstract class Ennemis extends Case {
 
     protected String nom ;
     protected int viePoints;
@@ -35,5 +39,20 @@ public abstract class Ennemis {
 
     public void setForcaAttaque(int forcaAttaque) {
         this.forcaAttaque = forcaAttaque;
+    }
+
+    public void interact(Personnage perso){
+        System.out.println(" Ouuups! Vous venez de tomber sur un " + this.nom + " ! Un combat s'engage ! ");
+
+    }
+
+
+    @Override
+    public String toString() {
+        return "Ennemis{" +
+                "nom='" + nom + '\'' +
+                ", viePoints=" + viePoints +
+                ", forcaAttaque=" + forcaAttaque +
+                '}';
     }
 }

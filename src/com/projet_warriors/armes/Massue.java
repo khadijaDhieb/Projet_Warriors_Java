@@ -1,6 +1,6 @@
 package com.projet_warriors.armes;
 
-public class Massue extends Armes {
+public class Massue extends Arme {
 
 
     public Massue() {

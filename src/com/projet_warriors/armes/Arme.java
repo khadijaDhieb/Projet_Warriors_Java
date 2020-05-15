@@ -1,15 +1,17 @@
 package com.projet_warriors.armes;
 
 import com.projet_warriors.Case;
+import com.projet_warriors.personnages.Guerrier;
+import com.projet_warriors.personnages.Personnage;
 
-public class Armes extends Case {
+public class Arme extends Case {
 
-    protected String nom ;
+    protected String nom;
     protected int forceAttaque;
 
-    public Armes() {
+    public Arme() {
         this.nom = "arme";
-        this.forceAttaque =0;
+        this.forceAttaque = 0;
     }
 
     public String getNom() {
@@ -28,10 +30,19 @@ public class Armes extends Case {
         this.forceAttaque = forceAttaque;
     }
 
+    public void interact(Personnage perso) {
+
+        if (perso instanceof Guerrier) {
+            ((Guerrier) perso).setArme(this);
+            System.out.println(" Vous venez de collecter un " + this.nom + " ! vous gagnez " + this.forceAttaque + " points de force d'attaque en plus ! ");
+            perso.addForce(this.forceAttaque);
+        }
+    }
+
 
     @Override
     public String toString() {
-        return "Armes{" +
+        return "Arme{" +
                 "nom='" + nom + '\'' +
                 ", forceAttaque=" + forceAttaque +
                 '}';

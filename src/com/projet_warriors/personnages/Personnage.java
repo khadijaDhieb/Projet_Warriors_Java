@@ -1,27 +1,55 @@
 package com.projet_warriors.personnages;
 
+import com.projet_warriors.armes.Arme;
+import com.projet_warriors.potions.Potion;
+
 public abstract class Personnage {
 
     protected String nom;
     protected int vie;
     protected int force;
+    protected int maxForce;
+    protected int maxVie;
 
-
-    public Personnage(){
+    public Personnage() {
         this("");
     }
 
     public Personnage(String nom) {
-        this(nom , 0 , 0);
+        this(nom, 0, 0, 0, 0);
     }
 
 
-    public Personnage(String name, int lifeLevel, int power) {
-        this.nom= name;
+    public Personnage(String name, int lifeLevel, int power, int maxV, int maxF) {
+        this.nom = name;
         this.vie = lifeLevel;
         this.force = power;
+        this.maxVie = maxV;
+        this.maxForce = maxF;
+
     }
 
+
+    public void addVie(int pPotion) {
+        int pPoints = pPotion + this.vie;
+        if (pPoints <= this.maxVie) {
+            this.vie = pPoints;
+        } else {
+            this.vie = this.maxVie;
+        }
+        System.out.println(" Votre niveau de vie actuel est de : " + this.vie);
+    }
+
+    public void addForce(int pForce) {
+        //System.out.println("test");
+        int aForce = pForce + this.force;
+        if (aForce <= this.maxForce) {
+            this.force = aForce;
+        } else {
+            this.force = this.maxForce;
+        }
+        System.out.println(" Votre force actuel est de : " + this.force);
+    }
 
 
     public String getNom() {

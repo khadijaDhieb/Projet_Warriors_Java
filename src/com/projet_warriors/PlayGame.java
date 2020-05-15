@@ -5,10 +5,10 @@ import com.projet_warriors.personnages.Guerrier;
 import com.projet_warriors.personnages.Magicien;
 import com.projet_warriors.personnages.Personnage;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PlayGame {
-
 
     //---------- Méthode qui permet de créer soit un guerrier soit un magicien selon le choix de l'utilisateur
 
@@ -52,14 +52,14 @@ public class PlayGame {
     //---------------- Méthode qui permet de lancer le dè et avancer le joueur
 
 
-    public void play(Scanner input) {
+    public void play(Scanner input, Personnage player) {
 
         int posPlayer = 0;
-        int plateau = 64;
-        int dice ;
+        int dice;
         int tour = 0;
+        PlateauJeu plateau = new PlateauJeu();
 
-        while (posPlayer < plateau) {
+        while (posPlayer < plateau.getPlateau()) {
 
             System.out.println("Appuyer sur entrer pour lancer le dè");
             System.out.println("----------------------");
@@ -69,15 +69,16 @@ public class PlayGame {
             System.out.println("Vous avancez de  : " + dice + " cases.");
 
             posPlayer = posPlayer + dice;
+            System.out.println("Votre position actuelle est  : " + posPlayer);
+            this.interactionPlateau(player, plateau, posPlayer);
 
             try {
-                controlePos(posPlayer , plateau);
+                controlePos(posPlayer, plateau.getPlateau());
             } catch (PersonnageHorsPlateauException e) {
-                System.out.println("Ah non ! Vous avez depassez la derniere case de " + (posPlayer-plateau) + "! Votre hèros sera automatiquement placer sur la case 64 ;) ");
-                posPlayer = plateau ;
+                System.out.println("Ah non ! Vous avez depassez la derniere case de " + (posPlayer - plateau.getPlateau()) + "! Votre hèros sera automatiquement placer sur la case 64 ;) ");
+                posPlayer = plateau.getPlateau();
             }
 
-            System.out.println("Votre position actuelle est  : " + posPlayer);
 
             tour++;
         }
@@ -116,11 +117,26 @@ public class PlayGame {
 
     //------------- Méthode qui gère le PersonnageHorsPlateauException
 
-    public void controlePos(int pos , int plateau) throws PersonnageHorsPlateauException {
+    public void controlePos(int pos, int plateau) throws PersonnageHorsPlateauException {
         if (pos > plateau) {
             throw new PersonnageHorsPlateauException("Dépassement de la dernière case ");
         }
 
+    }
+
+
+    //---------------- Méthode qui permet l'intéraction plateau
+
+    public void interactionPlateau(Personnage perso, PlateauJeu plateauJeu, int posJ) {
+
+        ArrayList<Case> cases = plateauJeu.getCases();
+        for (int i = 0; i < plateauJeu.getPlateau(); i++) {
+            if (posJ == i) {
+                System.out.println(cases.get(i));
+                Case casePlateau = cases.get(i);
+                casePlateau.interact(perso);
+            }
+        }
     }
 
 

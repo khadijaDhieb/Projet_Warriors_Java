@@ -1,12 +1,12 @@
 package com.projet_warriors.personnages;
 
-import com.projet_warriors.armes.Armes;
 
+import com.projet_warriors.armes.Sort;
 
 public class Magicien extends Personnage {
 
-    private Armes sort;
-    private String philtre ;
+    private Sort sort ;
+    private String philtre;
 
     public Magicien() {
         this("");
@@ -16,26 +16,35 @@ public class Magicien extends Personnage {
 //        super(name , 3 , 8);
 //        this.sort = new Armes() ;
 
-        this(name , 3 , 8);
+        this(name, 3, 8 , 6,15);
 
     }
 
-    public Magicien(String name, int lifeLevel, int power) {
-        super(name, lifeLevel, power);
-        this.sort = new Armes() ;
+    public Magicien(String name, int lifeLevel, int power , int maxV , int maxF) {
+        super(name, lifeLevel, power , maxV , maxF);
+        this.philtre = "philtre";
+        this.sort = new Sort() ;
     }
 
-    public Armes getSort() {
+    public Sort getSort() {
         return sort;
     }
 
-    public void setSort(Armes sort) {
+    public void setSort(Sort sort) {
         this.sort = sort;
+    }
+
+    public String getPhiltre() {
+        return philtre;
+    }
+
+    public void setPhiltre(String philtre) {
+        this.philtre = philtre;
     }
 
     @Override
     public String toString() {
-        return  super.toString()+
+        return super.toString() +
                 " , sort=" + sort +
                 ", philtre='" + philtre + '\'' +
                 '}';
