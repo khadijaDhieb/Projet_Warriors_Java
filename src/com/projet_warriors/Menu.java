@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    Personnage playerHero ;
+    Personnage playerHero;
 
     public Menu() {
         System.out.println("Vous avez lancez une nouvelle partie: Bienvenue ! Si vous changez d'avis, vous pouvez tapez 'quitter' !");
@@ -15,30 +15,38 @@ public class Menu {
 
     //------------------ Méthode du déroule de jeu
 
-
+    /**
+     * @param input
+     * méthode qui s'occupe de lancer le jeu
+     */
     public void lanceJeu(Scanner input) {
 
         PlayGame partie = new PlayGame();
 
-        this.createPlayerValid(input, partie );
-        System.out.println(playerHero);
+        this.createPlayerValid(input, partie);
+        System.out.println(this.playerHero);
 
         System.out.println("Appuyer sur entrer pour commencer le jeu ");
         String choice = input.nextLine();
-        partie.exitJeu(choice , input);
+        partie.exitJeu(choice, input);
 
 
         System.out.println("--> Que la partie commence !" +
                 "Vous êtes sur la première case du plateau de jeu.");
 
-        partie.play(input , playerHero);
+        partie.play(input, playerHero);
         this.choixRelanceJeu(input);
 
     }
 
     //------------------------- Méthode qui permet de s'assurer que la crétaion d'un joueur a bien était faites
 
-    public void createPlayerValid(Scanner input, PlayGame partie ) {
+    /**
+     * @param input qui réprésente l'objet scanner
+     * @param partie qui répresente l'objet play game
+     * validation de la création d'un personnage
+     */
+    public void createPlayerValid(Scanner input, PlayGame partie) {
 
         boolean ready = false;
 
@@ -48,10 +56,11 @@ public class Menu {
             String playerChoice = input.nextLine();
             //partie.exitJeu(playerChoice, input);
 
-            playerHero = partie.createPlayer(playerChoice);
+            this.playerHero = partie.createPlayer(playerChoice);
 
             if (playerHero != null) {
-                playerHero = partie.chooseName(playerHero, input);
+                String heroName = this.chooseName(partie, input);
+                this.playerHero = partie.setPlayerName(playerHero, heroName);
                 ready = true;
             } else {
                 String status = partie.statusJeu(input);
@@ -65,21 +74,43 @@ public class Menu {
 
     }
 
+
+    //----------------- Méthode qui permet à l'utilisateur de choisir le nom de son personnage
+
+    /**
+     * @param partie : objet de la classe playGame
+     * @param input : objet scanner
+     * @return : retourne un String
+     */
+    public String chooseName(PlayGame partie, Scanner input) {
+        String heroName = "";
+
+        while (heroName.equals("")) {
+            System.out.println("Un super héros demande un super nom nn ? Merci d'entrer le nom de votre personnage ");
+            heroName = input.nextLine();
+        }
+        partie.exitJeu(heroName, input);
+        return heroName;
+    }
+
+
     //------------------- Méthode qui permet de choisir entre: quitter / recommencer une partie
 
-    public void choixRelanceJeu(Scanner input){
+    /**
+     * @param input : objet scanner
+     *              méthode pour le replay game
+     */
+    public void choixRelanceJeu(Scanner input) {
         System.out.println("Vous Voulez reprendre la partie ou quitter ? Oui ou Non ");
         String choix = input.nextLine();
 
-        if (choix.toLowerCase().equals("oui")){
+        if (choix.toLowerCase().equals("oui")) {
             this.lanceJeu(input);
-        }else{
+        } else {
             System.exit(0);
         }
 
     }
-
-
 
 
 }

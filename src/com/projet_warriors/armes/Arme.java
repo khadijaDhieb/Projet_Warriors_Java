@@ -36,6 +36,7 @@ public class Arme extends Case {
             ((Guerrier) perso).setArme(this);
             System.out.println(" Vous venez de collecter un " + this.nom + " ! vous gagnez " + this.forceAttaque + " points de force d'attaque en plus ! ");
             perso.addForce(this.forceAttaque);
+            System.out.println(perso);
         }
     }
 

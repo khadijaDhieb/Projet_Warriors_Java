@@ -1,6 +1,8 @@
 package com.projet_warriors;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import com.projet_warriors.armes.*;
 import com.projet_warriors.potions.*;
 import com.projet_warriors.ennemis.*;
@@ -12,9 +14,7 @@ public class PlateauJeu {
 
     public PlateauJeu() {
 
-//        this.cases =;
-
-        for (int i= 0 ; i< plateau ; i++){
+        for (int i= 0 ; i < this.plateau ; i++){
 
             switch(i) {
                 case 45: case 52: case 56: case 62:
@@ -48,6 +48,11 @@ public class PlateauJeu {
                    this.cases.add(new CaseVide());
             }
         }
+
+    }
+
+    public void randamPlateau(){
+        Collections.shuffle(this.cases);
     }
 
     public ArrayList getCases() {

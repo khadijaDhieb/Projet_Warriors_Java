@@ -1,7 +1,6 @@
 package com.projet_warriors.armes;
 
 import com.projet_warriors.Case;
-import com.projet_warriors.personnages.Guerrier;
 import com.projet_warriors.personnages.Magicien;
 import com.projet_warriors.personnages.Personnage;
 
@@ -36,6 +35,7 @@ public class Sort extends Case{
                 ((Magicien) perso).setSort(this);
                 System.out.println(" Vous venez de collecter un " +this.nom +" ! vous gagnez " + this.forceAttaque + " points de force d'attaque de plus ! ");
                 perso.addForce(this.forceAttaque);
+                System.out.println(perso);
             }
         }
 

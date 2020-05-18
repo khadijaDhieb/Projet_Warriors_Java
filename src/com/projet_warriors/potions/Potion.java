@@ -33,6 +33,7 @@ public class Potion extends Case {
     public void interact(Personnage perso){
         System.out.println(" Vous venez de collecter un "+ this.nom + " ! vous gagnez " + this.viePoints + "de points de vie de plus ! ");
         perso.addVie(this.viePoints);
+        System.out.println(perso);
     }
 
     @Override
