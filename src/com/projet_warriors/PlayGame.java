@@ -11,8 +11,17 @@ import java.util.Scanner;
 
 public class PlayGame {
 
+    private Personnage playerHero;
 
-    //---------- Méthode qui permet de créer soit un guerrier soit un magicien selon le choix de l'utilisateur
+    public Personnage getPlayerHero() {
+        return playerHero;
+    }
+
+    public void setPlayerHero(Personnage playerHero) {
+        this.playerHero = playerHero;
+    }
+
+//---------- Méthode qui permet de créer soit un guerrier soit un magicien selon le choix de l'utilisateur
 
     /**
      * @param choice une string
@@ -32,20 +41,6 @@ public class PlayGame {
         return null;
     }
 
-    //------------ Méthode qui permet d'attribuer le nom du personnage créé
-
-    /**
-     *
-     * @param hero : objet personnage
-     * @param name : une string
-     * @return retourne un objet personnage
-     */
-    public Personnage setPlayerName(Personnage hero, String name) {
-        hero.setNom(name);
-        return hero;
-    }
-
-
     //-------------- Méthode qui permet de simuler un dé de 6
 
     /**
@@ -60,12 +55,10 @@ public class PlayGame {
     //---------------- Méthode qui permet de lancer le dè et avancer le joueur
 
     /**
-     *
      * @param input : objet scanner
-     * @param player : objet player
      */
 
-    public void play(Scanner input, Personnage player) {
+    public void play(Scanner input) {
 
         int posPlayer = 0;
         int dice;
@@ -75,7 +68,6 @@ public class PlayGame {
 
         while (posPlayer < plateau.getPlateau()) {
 
-            System.out.println("Appuyer sur entrer pour lancer le dè");
             System.out.println("----------------------");
             input.nextLine();
 
@@ -83,7 +75,6 @@ public class PlayGame {
             System.out.println("Vous avancez de  : " + dice + " cases.");
 
             posPlayer = posPlayer + dice;
-            System.out.println("Votre position actuelle est  : " + posPlayer);
 
             try {
                 controlePos(posPlayer, plateau.getPlateau());
@@ -92,8 +83,10 @@ public class PlayGame {
                 posPlayer = plateau.getPlateau();
             }
 
+            System.out.println("Votre position actuelle est  : " + posPlayer);
+
             if (posPlayer != plateau.getPlateau()) {
-                this.interactionPlateau(player, plateau, posPlayer);
+                this.interactionPlateau(plateau, posPlayer);
             }
             tour++;
         }
@@ -113,7 +106,7 @@ public class PlayGame {
      */
     public String statusJeu(Scanner input) {
         String status = "";
-        System.out.println("Ah non c'est pas la bonne réponse ! Voulez vous continuer ou quitter le jeu? Quitter ou Continuer ");
+        System.out.println("Ah non c'est pas la bonne réponse ! Voulez vous continuer ou quitter le jeu? ");
         String str = input.nextLine();
         if (str.toLowerCase().equals("quitter")) {
             status = "quitter";
@@ -126,11 +119,12 @@ public class PlayGame {
 
     /**
      * @param status : string
-     * @param input : objet scanner
+     * @param input  : objet scanner
      */
+
     public void exitJeu(String status, Scanner input) {
         if (status.equals("quitter")) {
-            System.out.println("Confirmer votre choix? Quitter ou Continuer ");
+            System.out.println("Confirmer votre choix? Oui ou Non ");
             String str = input.nextLine();
             if (str.equals("quitter")) {
                 System.exit(0);
@@ -141,10 +135,11 @@ public class PlayGame {
     //------------- Méthode qui gère le PersonnageHorsPlateauException
 
     /**
-     * @param pos : int qui represente l'objet joueur
+     * @param pos     : int qui represente l'objet joueur
      * @param plateau : int qui represente la taille du plateau du jeu
      * @throws PersonnageHorsPlateauException : exception du dépassement du plateau
      */
+
     public void controlePos(int pos, int plateau) throws PersonnageHorsPlateauException {
         if (pos > plateau) {
             throw new PersonnageHorsPlateauException("Dépassement de la dernière case ");
@@ -156,16 +151,15 @@ public class PlayGame {
     //---------------- Méthode qui permet l'intéraction plateau
 
     /**
-     * @param perso : objet personnage
      * @param plateauJeu : objet plateau de jeu
-     * @param posJ int : position u joueur
+     * @param posJ       int : position u joueur
      */
-    public void interactionPlateau(Personnage perso, PlateauJeu plateauJeu, int posJ) {
+    public void interactionPlateau(PlateauJeu plateauJeu, int posJ) {
 
         ArrayList<Case> cases = plateauJeu.getCases();
         System.out.println(cases.get(posJ));
         Case casePlateau = cases.get(posJ);
-        casePlateau.interact(perso);
+        casePlateau.interact(this.playerHero);
     }
 
 

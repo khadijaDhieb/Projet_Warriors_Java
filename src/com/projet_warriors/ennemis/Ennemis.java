@@ -1,9 +1,10 @@
 package com.projet_warriors.ennemis;
 
 import com.projet_warriors.Case;
+import com.projet_warriors.PlateauJeu;
 import com.projet_warriors.personnages.Personnage;
 
-public abstract class Ennemis extends Case {
+public abstract class Ennemis implements Case {
 
     protected String nom ;
     protected int viePoints;
@@ -41,18 +42,23 @@ public abstract class Ennemis extends Case {
     }
 
     public void interact(Personnage perso){
-        int forceHero = perso.getForce();
-        int vieHero = perso.getVie();
 
         System.out.println(" Ouups! Vous venez de tomber sur un " + this.nom + " ! Un combat s'engage ! ");
 
-        int attaqueHero = forceHero -this.viePoints ;
+        int attaqueHero = perso.getForce()-this.viePoints ;
 
         if (attaqueHero >= 0){
             System.out.println("Bravo ! T'as vaincu le " + this.nom);
         }else{
-            System.out.println("Ah non ta force n'était pas suffisante! C'est à lui d'attaquer attention !");
+            System.out.println("Ta force n'était pas suffisante! C'est à lui d'attaquer maintenant !");
 
+                int attaqueEnnemi = this.forcaAttaque- perso.getVie() ;
+
+                if (attaqueEnnemi >=0){
+                    System.out.println("Ah non ! Il t'as vaincu ... !");
+                }else{
+                    System.out.println("Bravo ! Très bonne défense ! Au revoir " + this.nom);
+                }
         }
 
 

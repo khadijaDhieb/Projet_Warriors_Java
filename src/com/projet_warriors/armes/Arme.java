@@ -4,7 +4,7 @@ import com.projet_warriors.Case;
 import com.projet_warriors.personnages.Guerrier;
 import com.projet_warriors.personnages.Personnage;
 
-public class Arme extends Case {
+public class Arme implements Case {
 
     protected String nom;
     protected int forceAttaque;

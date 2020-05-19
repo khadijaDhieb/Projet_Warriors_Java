@@ -4,7 +4,7 @@ import com.projet_warriors.Case;
 import com.projet_warriors.personnages.Magicien;
 import com.projet_warriors.personnages.Personnage;
 
-public class Sort extends Case{
+public class Sort implements Case{
 
         protected String nom;
         protected int forceAttaque;

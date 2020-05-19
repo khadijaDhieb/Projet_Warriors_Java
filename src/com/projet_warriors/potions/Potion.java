@@ -4,7 +4,7 @@ import com.projet_warriors.Case;
 import com.projet_warriors.personnages.Guerrier;
 import com.projet_warriors.personnages.Personnage;
 
-public class Potion extends Case {
+public class Potion implements Case {
 
     protected String nom;
     protected int viePoints ;
