@@ -6,15 +6,16 @@ import com.projet_warriors.personnages.Personnage;
 
 public abstract class Ennemis implements Case {
 
-    protected String nom ;
+    protected String nom;
     protected int viePoints;
     protected int forcaAttaque;
+    protected Boolean status = false;
 
 
     public Ennemis() {
-        this.nom ="";
-        this.viePoints=0;
-        this.forcaAttaque=0;
+        this.nom = "";
+        this.viePoints = 0;
+        this.forcaAttaque = 0;
     }
 
     public String getNom() {
@@ -41,29 +42,37 @@ public abstract class Ennemis implements Case {
         this.forcaAttaque = forcaAttaque;
     }
 
-    public void interact(Personnage perso){
-
-        System.out.println(" Ouups! Vous venez de tomber sur un " + this.nom + " ! Un combat s'engage ! ");
-
-        int attaqueHero = perso.getForce()-this.viePoints ;
-
-        if (attaqueHero >= 0){
-            System.out.println("Bravo ! T'as vaincu le " + this.nom);
-        }else{
-            System.out.println("Ta force n'était pas suffisante! C'est à lui d'attaquer maintenant !");
-
-                int attaqueEnnemi = this.forcaAttaque- perso.getVie() ;
-
-                if (attaqueEnnemi >=0){
-                    System.out.println("Ah non ! Il t'as vaincu ... !");
-                }else{
-                    System.out.println("Bravo ! Très bonne défense ! Au revoir " + this.nom);
-                }
-        }
-
-
+    public Boolean getStatus() {
+        return status;
     }
 
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public void interact(Personnage perso) {
+
+        int attaqueHero = perso.getForce() - this.viePoints;
+
+        if (attaqueHero >= 0 && perso.getForce()!=0) {
+            System.out.println("Bravo ! T'as vaincu le " + this.nom);
+            perso.setForce(attaqueHero);
+            System.out.println(perso);
+        } else {
+            System.out.println("Ta force n'est pas suffisante! On passe au Round 2 : C'est '" + this.nom+ "' qui attaque!");
+            perso.setForce(0);
+            int attaqueEnnemi = perso.getVie()-this.forcaAttaque ;
+
+            if (attaqueEnnemi <= 0) {
+                this.status = true;
+                System.out.println("Ah non ! Il t'as vaincu ! Game Over !");
+            } else {
+                perso.setVie(attaqueEnnemi);
+                System.out.println("Bravo ! Très bonne défense ! Au revoir " + this.nom);
+                System.out.println(perso);
+            }
+        }
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.projet_warriors;
 
+import com.projet_warriors.ennemis.Ennemis;
 import com.projet_warriors.exception.PersonnageHorsPlateauException;
 import com.projet_warriors.personnages.Guerrier;
 import com.projet_warriors.personnages.Magicien;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 public class PlayGame {
 
     private Personnage playerHero;
+    private int posPlayer = 0;
 
     public Personnage getPlayerHero() {
         return playerHero;
@@ -59,14 +61,14 @@ public class PlayGame {
      */
 
     public void play(Scanner input) {
-
-        int posPlayer = 0;
         int dice;
         int tour = 0;
         PlateauJeu plateau = new PlateauJeu();
         plateau.randamPlateau();
 
-        while (posPlayer < plateau.getPlateau()) {
+        Boolean playerLost = false;
+        while (this.posPlayer < plateau.getPlateau()) {
+
 
             System.out.println("----------------------");
             input.nextLine();
@@ -74,26 +76,31 @@ public class PlayGame {
             dice = lanceDice();
             System.out.println("Vous avancez de  : " + dice + " cases.");
 
-            posPlayer = posPlayer + dice;
+            this.posPlayer += dice;
 
             try {
-                controlePos(posPlayer, plateau.getPlateau());
+                controlePos(plateau.getPlateau());
             } catch (PersonnageHorsPlateauException e) {
-                System.out.println("Ah non ! Vous avez depassez la derniere case de " + (posPlayer - plateau.getPlateau()) + "! Votre hèro sera automatiquement placer sur la case 64 ;) ");
-                posPlayer = plateau.getPlateau();
+                System.out.println("Ah non ! Vous avez depassez la derniere case de " + (this.posPlayer - plateau.getPlateau()) + "! Votre hèro sera automatiquement placer sur la case " + plateau.getPlateau());
+                this.posPlayer = plateau.getPlateau();
             }
 
-            System.out.println("Votre position actuelle est  : " + posPlayer);
+            System.out.println("Votre position actuelle est  : " + this.posPlayer);
 
-            if (posPlayer != plateau.getPlateau()) {
-                this.interactionPlateau(plateau, posPlayer);
+            if (this.posPlayer != plateau.getPlateau()) {
+                playerLost = this.interactionPlateau(plateau, input);
+                if (playerLost == true) {
+                    break;
+                }
             }
             tour++;
         }
 
+        if (playerLost == false) {
+            System.out.println("Bravo! vous avez gagner la partie ! ");
+        }
 
-        System.out.println("Bravo! vous avez gagner la partie ! ");
-        System.out.println("Elle a duré : " + tour + " tours.");
+        System.out.println("La partie a duré : " + tour + " tours.");
 
     }
 
@@ -113,7 +120,6 @@ public class PlayGame {
         }
         return status;
     }
-
 
     //------------------ Méthode qui permet de quitter le jeu
 
@@ -135,13 +141,12 @@ public class PlayGame {
     //------------- Méthode qui gère le PersonnageHorsPlateauException
 
     /**
-     * @param pos     : int qui represente l'objet joueur
      * @param plateau : int qui represente la taille du plateau du jeu
      * @throws PersonnageHorsPlateauException : exception du dépassement du plateau
      */
 
-    public void controlePos(int pos, int plateau) throws PersonnageHorsPlateauException {
-        if (pos > plateau) {
+    public void controlePos(int plateau) throws PersonnageHorsPlateauException {
+        if (this.posPlayer > plateau) {
             throw new PersonnageHorsPlateauException("Dépassement de la dernière case ");
         }
 
@@ -152,15 +157,59 @@ public class PlayGame {
 
     /**
      * @param plateauJeu : objet plateau de jeu
-     * @param posJ       int : position u joueur
      */
-    public void interactionPlateau(PlateauJeu plateauJeu, int posJ) {
-
+    public Boolean interactionPlateau(PlateauJeu plateauJeu, Scanner input) {
+        boolean status = false;
         ArrayList<Case> cases = plateauJeu.getCases();
-        System.out.println(cases.get(posJ));
-        Case casePlateau = cases.get(posJ);
-        casePlateau.interact(this.playerHero);
+        System.out.println(cases.get(this.posPlayer));
+        Case casePlateau = cases.get(this.posPlayer);
+
+        if (casePlateau instanceof Ennemis) {
+            status = jouerFuire(input, casePlateau, status , cases);
+            if (status == false){
+                cases.set(this.posPlayer , new CaseVide());
+            }
+        } else {
+            casePlateau.interact(this.playerHero);
+        }
+        return status;
     }
 
+    //------------ Méthode combat tour par tour
+
+    public Boolean jouerFuire(Scanner input, Case pcase, Boolean pstatus , ArrayList<Case> cases) {
+        System.out.println(" Ouups! Vous venez de tomber sur un Ennemi ! Un combat s'engage ! ");
+
+            System.out.println("Round 1 : c'est '" + this.playerHero.getNom() + "' qui commence !");
+            Boolean test = false;
+            do {
+                System.out.println("Vous avez deux options : Combattre ou Fuire ? C ou F ");
+                String choix = input.nextLine();
+                if (choix.equals("c")) {
+
+                    System.out.println("Vous êtes courageux !");
+                    pcase.interact(this.playerHero);
+                    pstatus = ((Ennemis) pcase).getStatus();
+                    test = true;
+                } else if (choix.equals("f")) {
+
+                    System.out.println("Oui, parfois c'est plus sage de fuire ;)");
+                    int recul = lanceDice();
+                    this.posPlayer -= recul;
+                    System.out.println("Mais ça a un prix! Vous reculez de " + recul + " cases.");
+                    System.out.println("Votre nouvelle poistion est : " + this.posPlayer);
+
+                    System.out.println("Vous êtes tombez sur :" + cases.get(this.posPlayer));
+                    cases.get(this.posPlayer).interact(this.playerHero);
+
+                    test = true;
+                } else {
+                    System.out.println("Merci d'entrer un choix valide");
+
+                }
+            } while (test == false);
+
+        return pstatus;
+    }
 
 }

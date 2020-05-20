@@ -3,7 +3,8 @@ package com.projet_warriors;
 import com.projet_warriors.personnages.Personnage;
 
 public class CaseVide implements Case {
-    protected String nom;
+
+    private String nom;
 
 
     public CaseVide() {
