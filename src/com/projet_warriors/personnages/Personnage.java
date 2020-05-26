@@ -5,11 +5,11 @@ import com.projet_warriors.potions.Potion;
 
 public abstract class Personnage {
 
-    protected String nom;
-    protected int vie;
-    protected int force;
-    protected int maxForce;
-    protected int maxVie;
+    private String nom;
+    private int vie;
+    private int force;
+    private int maxForce;
+    private int maxVie;
 
     public Personnage() {
         this("");

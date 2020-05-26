@@ -55,6 +55,10 @@ public class PlateauJeu {
         Collections.shuffle(this.cases);
     }
 
+    public Case caseAt(int index){
+        return this.cases.get(index);
+    }
+
     public ArrayList getCases() {
         return cases;
     }
