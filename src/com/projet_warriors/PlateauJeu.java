@@ -59,6 +59,10 @@ public class PlateauJeu {
         return this.cases.get(index);
     }
 
+    public void setCaseAt (int index , Case objetCase){
+        this.cases.set(index , objetCase);
+    }
+
     public ArrayList getCases() {
         return cases;
     }

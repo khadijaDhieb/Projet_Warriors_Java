@@ -1,5 +1,6 @@
 package com.projet_warriors;
 
+import com.projet_warriors.bdd.Requette;
 import com.projet_warriors.personnages.Personnage;
 
 import java.util.Scanner;
@@ -23,7 +24,13 @@ public class Menu {
         Personnage playerHero;
 
         playerHero = this.createPlayerValid(input, partie);
+
+        //Sauvegarde en bdd du personnage créé
+        Requette.createHero(playerHero);
+
         partie.setPlayerHero(playerHero);
+
+        this.updatePerso(input , playerHero);
 
         System.out.println("Appuyer sur entrer pour commencer le jeu ");
         String choice = input.nextLine();
@@ -92,6 +99,31 @@ public class Menu {
         }
         partie.exitJeu(heroName, input);
         return heroName;
+    }
+
+
+
+    //----------------- Méthode qui permet de mettre à jour un personnage
+
+    public void updatePerso(Scanner input , Personnage perso){
+
+        System.out.println("Voulez vous mettre à jour votre Héro ? Oui ou Non");
+        String choix = input.nextLine();
+
+        if(choix.equals("oui")){
+
+            System.out.println("Entrer votre nouveau nom ? ");
+            String nom = input.nextLine();
+
+            System.out.println("Entrer votre nouvelle defense? ");
+            String defense = input.nextLine();
+
+            Requette.updateHero(perso , nom , defense);
+
+            perso.setNom(nom);
+            perso.setDefense(defense);
+
+        }
     }
 
 

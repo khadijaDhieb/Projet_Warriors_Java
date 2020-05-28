@@ -5,7 +5,7 @@ import com.projet_warriors.armes.Arme;
 public class Guerrier extends Personnage {
 
     private Arme arme;
-    private String bouclier ;
+
 
     public Guerrier() {
        this("");
@@ -16,9 +16,8 @@ public class Guerrier extends Personnage {
     }
 
     public Guerrier(String name, int lifeLevel, int power , int maxV , int maxF) {
-        super(name , lifeLevel , power ,maxV , maxF );
+        super(name , lifeLevel , power ,maxV , maxF , "bouclier");
         this.arme = new Arme();
-        this.bouclier="bouclier";
     }
 
     public Arme getArme() {
@@ -28,19 +27,11 @@ public class Guerrier extends Personnage {
     public void setArme(Arme arme) {
         this.arme = arme;
     }
-    public String getBouclier() {
-        return bouclier;
-    }
-
-    public void setBouclier(String bouclier) {
-        this.bouclier = bouclier;
-    }
 
     @Override
     public String toString() {
         return  super.toString()+
-                " , arme = " + arme +
-                ", bouclier='" + bouclier + '\'' +
+                " , arme = " + arme  +
                 '}';
     }
 
