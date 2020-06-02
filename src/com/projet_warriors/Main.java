@@ -1,5 +1,7 @@
 package com.projet_warriors;
 
+import com.projet_warriors.bdd.Requette;
+
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +10,8 @@ public class Main {
         // J'instancie mon objet scanner pour les entrées clavier
         Scanner sc = new Scanner(System.in);
 
-      //  Sauvegarde.getHero(1);
+//        Requette requette = new Requette();
+//        requette.getHeroes();
 
         Menu partie = new Menu();
         partie.lanceJeu(sc);

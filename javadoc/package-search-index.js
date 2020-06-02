@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.projet_warriors"},{"l":"com.projet_warriors.armes"},{"l":"com.projet_warriors.bdd"},{"l":"com.projet_warriors.ennemis"},{"l":"com.projet_warriors.exception"},{"l":"com.projet_warriors.personnages"},{"l":"com.projet_warriors.potions"}]

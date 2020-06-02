@@ -26,11 +26,13 @@ public class Menu {
         playerHero = this.createPlayerValid(input, partie);
 
         //Sauvegarde en bdd du personnage créé
-        Requette.createHero(playerHero);
+        Requette requette = new Requette();
+        requette.createHero(playerHero);
+       requette.getHero(playerHero);
 
         partie.setPlayerHero(playerHero);
 
-        this.updatePerso(input , playerHero);
+      //  this.updatePerso(requette ,input , playerHero);
 
         System.out.println("Appuyer sur entrer pour commencer le jeu ");
         String choice = input.nextLine();
@@ -105,7 +107,7 @@ public class Menu {
 
     //----------------- Méthode qui permet de mettre à jour un personnage
 
-    public void updatePerso(Scanner input , Personnage perso){
+    public void updatePerso(Requette requette , Scanner input , Personnage perso){
 
         System.out.println("Voulez vous mettre à jour votre Héro ? Oui ou Non");
         String choix = input.nextLine();
@@ -118,14 +120,14 @@ public class Menu {
             System.out.println("Entrer votre nouvelle defense? ");
             String defense = input.nextLine();
 
-            Requette.updateHero(perso , nom , defense);
+            //sauvegarde des modifications en bdd
+            requette.updateHero(perso , nom , defense);
 
             perso.setNom(nom);
             perso.setDefense(defense);
 
         }
     }
-
 
     //------------------- Méthode qui permet de choisir entre: quitter / recommencer une partie
 

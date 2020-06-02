@@ -9,6 +9,9 @@ import com.projet_warriors.personnages.Personnage;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Classe PlayGame qui gère le jeu
+ */
 
 public class PlayGame {
 
@@ -46,6 +49,7 @@ public class PlayGame {
 
 
     //-------------- Méthode qui permet de simuler un dé de 6
+
     /**
      * permet de simuler un dice de 6
      * @return un int d'une valeur entre 1 et 6
@@ -208,7 +212,7 @@ public class PlayGame {
         if (status.equals("quitter")) {
             System.out.println("Confirmer votre choix? Oui ou Non ");
             String str = input.nextLine();
-            if (str.equals("quitter")) {
+            if (str.equals("oui")) {
                 System.exit(0);
             }
         }
