@@ -11,19 +11,19 @@ public class Requette {
    private Statement state = null;
    private ResultSet result = null;
    private PreparedStatement prepare = null;
+   private Connection connBdd ;
 
 
     public void getHeroes() {
 
         try {
 
-            Connection conn = Connect.ConnectBdd();
+         this.connBdd = ConnectSingleton.getInstance();
             // System.out.println(conn);
 
             //Création d'un objet Statement
 
-            assert conn != null;
-            this.state = conn.createStatement();
+            this.state = this.connBdd.createStatement();
             //L'objet ResultSet contient le résultat de la requête SQL
             this.result = state.executeQuery("SELECT * FROM Hero");
 
@@ -45,7 +45,7 @@ public class Requette {
 
         } finally {
 
-            this.close(this.result,this.state);
+            this.close(this.result,this.state );
         }
 
 
@@ -57,12 +57,12 @@ public class Requette {
 
         try {
 
-            Connection conn = Connect.ConnectBdd();
+            this.connBdd = ConnectSingleton.getInstance();
 
             String query = "SELECT * FROM Hero WHERE nom = ? ";
 
             //On crée l'objet avec la requête en paramètre
-            this.prepare = conn.prepareStatement(query);
+            this.prepare = this.connBdd.prepareStatement(query);
             //On remplace le premier ? par
             this.prepare.setString(1, perso.getNom());
 
@@ -97,12 +97,12 @@ public class Requette {
 
         try {
 
-            Connection conn = Connect.ConnectBdd();
+            this.connBdd = ConnectSingleton.getInstance();
 
             String query = "INSERT into Hero  (type, nom, niveauVie, niveauForce, attaque, defense) VALUES(?, ?, ?, ?, ?, ?)";
 
             //On crée l'objet avec la requête en paramètre
-           this.prepare = conn.prepareStatement(query);
+           this.prepare = this.connBdd.prepareStatement(query);
             //On remplace les ? par
             this.prepare.setString(2, perso.getNom());
             this.prepare.setInt(3, perso.getVie());
@@ -122,10 +122,10 @@ public class Requette {
             this.prepare.executeUpdate();
             System.out.println("Votre personnage est bien été enregistré dans notre base de données");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            this.close(this.result , this.prepare);
+            this.close(this.result ,this.prepare);
         }
 
     }
@@ -136,12 +136,12 @@ public class Requette {
 
         try {
 
-            Connection conn = Connect.ConnectBdd();
+            this.connBdd = ConnectSingleton.getInstance();
 
             String query = "UPDATE `hero` SET `nom`= ?,`Defense`=? WHERE hero.nom = ?";
 
             //On crée l'objet avec la requête en paramètre
-            PreparedStatement prepare = conn.prepareStatement(query);
+            PreparedStatement prepare = this.connBdd.prepareStatement(query);
             //On remplace les ? par
             prepare.setString(1, nom);
             prepare.setString(2, defense);
@@ -150,46 +150,56 @@ public class Requette {
 
             prepare.executeUpdate();
             System.out.println("Votre personnage est bien été mis à jour dans notre base de données");
-            prepare.close();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            this.close(this.result ,this.prepare);
         }
+
     }
 
 //--------------------------------
     public void deleteHero(Personnage perso) {
         try {
 
-            Connection conn = Connect.ConnectBdd();
+            this.connBdd = ConnectSingleton.getInstance();
 
             String query = "DELETE FROM `hero` WHERE hero.nom = ?";
 
             //On crée l'objet avec la requête en paramètre
-            PreparedStatement prepare = conn.prepareStatement(query);
+            PreparedStatement prepare = this.connBdd.prepareStatement(query);
             //On remplace les ? par
             prepare.setString(1, perso.getNom());
 
 
             prepare.executeUpdate();
             System.out.println("Votre personnage est bien été mis à jour dans notre base de données");
-            prepare.close();
 
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            this.close(this.result ,this.prepare);
         }
 
     }
 
-//----------------------- Méthode qui permet
+//----------------------- Méthode qui permet de close Result, state et prepare
 
-    private void close(ResultSet result, Statement state) {
+    private void close(ResultSet result, Statement state ) {
         try {
             if (result != null) {
                 result.close();
+                System.out.println("result close");
             }
             if (state != null) {
                 state.close();
+                if(state instanceof PreparedStatement)
+                {System.out.println("prepare close");
+                }else{
+                    System.out.println("state close");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

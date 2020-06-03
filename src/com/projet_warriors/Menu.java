@@ -27,12 +27,13 @@ public class Menu {
 
         //Sauvegarde en bdd du personnage créé
         Requette requette = new Requette();
+        requette.getHeroes();
         requette.createHero(playerHero);
-       requette.getHero(playerHero);
+        requette.getHero(playerHero);
 
         partie.setPlayerHero(playerHero);
 
-      //  this.updatePerso(requette ,input , playerHero);
+        this.updatePerso(requette, input, playerHero);
 
         System.out.println("Appuyer sur entrer pour commencer le jeu ");
         String choice = input.nextLine();
@@ -104,15 +105,14 @@ public class Menu {
     }
 
 
-
     //----------------- Méthode qui permet de mettre à jour un personnage
 
-    public void updatePerso(Requette requette , Scanner input , Personnage perso){
+    public void updatePerso(Requette requette, Scanner input, Personnage perso) {
 
         System.out.println("Voulez vous mettre à jour votre Héro ? Oui ou Non");
         String choix = input.nextLine();
 
-        if(choix.equals("oui")){
+        if (choix.equals("oui")) {
 
             System.out.println("Entrer votre nouveau nom ? ");
             String nom = input.nextLine();
@@ -121,7 +121,7 @@ public class Menu {
             String defense = input.nextLine();
 
             //sauvegarde des modifications en bdd
-            requette.updateHero(perso , nom , defense);
+            requette.updateHero(perso, nom, defense);
 
             perso.setNom(nom);
             perso.setDefense(defense);

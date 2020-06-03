@@ -12,8 +12,11 @@ public class Main {
 
 //        Requette requette = new Requette();
 //        requette.getHeroes();
+//        requette.getHeroes();
+//        requette.getHeroes();
 
-        Menu partie = new Menu();
+
+         Menu partie = new Menu();
         partie.lanceJeu(sc);
 
 
